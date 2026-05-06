@@ -26,7 +26,7 @@ export default function RootLayout({
           {children}
         </main>
         <footer className="text-center text-base text-gray-500 py-6 border-t border-gray-200">
-          © 2026 상상우리. 학습 환경 전용.
+          © 2026 상상우리 — 시니어 일자리 자동 매칭 플랫폼.
         </footer>
       </body>
     </html>
