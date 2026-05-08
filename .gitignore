@@ -45,5 +45,8 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 
+# Claude Code local settings (may contain tokens)
+.claude/
+
 # screenshots
 screenshot-*.png
