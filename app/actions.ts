@@ -111,3 +111,7 @@ export async function updateMatchStatus(
   await supabase.from("matches").update({ status }).eq("id", matchId);
   revalidatePath("/admin");
 }
+
+export async function assignMatch(matchId: string): Promise<void> {
+  return updateMatchStatus(matchId, "assigned");
+}
