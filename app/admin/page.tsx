@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { AlertTriangle, Clock, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { MatchWithDetails, Senior } from "@/lib/supabase";
 import AssignButton from "./AssignButton";
@@ -46,7 +48,7 @@ export default async function AdminPage() {
         {/* ── 미매칭 ─────────────────────────────────────── */}
         <section className="rounded-2xl border-2 border-red-300 bg-red-50 p-5 flex flex-col gap-3 min-h-[200px]">
           <div className="flex items-center gap-2 mb-1">
-            <span className="w-3 h-3 rounded-full bg-red-400 inline-block" />
+            <AlertTriangle className="w-6 h-6 text-red-500 shrink-0" />
             <h2 className="text-2xl font-bold">미매칭</h2>
             <span className="ml-auto text-lg font-semibold text-red-500">{unmatched.length}명</span>
           </div>
@@ -57,6 +59,12 @@ export default async function AdminPage() {
             <div key={s.id} className="rounded-xl bg-white border border-gray-200 p-4 shadow-sm">
               <p className="text-lg font-bold text-gray-900">{s.name}</p>
               <p className="text-base text-gray-500">{s.region} · {s.desired_job} · 경력 {s.career_years}년</p>
+              <Link
+                href={`/recommendations?senior_id=${s.id}`}
+                className="mt-2 inline-block rounded-lg border border-blue-300 text-blue-700 text-base font-semibold px-4 py-2 hover:bg-blue-50 transition-colors min-h-[48px] flex items-center"
+              >
+                상세 보기 →
+              </Link>
             </div>
           ))}
         </section>
@@ -64,7 +72,7 @@ export default async function AdminPage() {
         {/* ── 매칭 대기 ───────────────────────────────────── */}
         <section className="rounded-2xl border-2 border-yellow-300 bg-yellow-50 p-5 flex flex-col gap-3 min-h-[200px]">
           <div className="flex items-center gap-2 mb-1">
-            <span className="w-3 h-3 rounded-full bg-yellow-400 inline-block" />
+            <Clock className="w-6 h-6 text-yellow-500 shrink-0" />
             <h2 className="text-2xl font-bold">매칭 대기</h2>
             <span className="ml-auto text-lg font-semibold text-yellow-600">{pending.length}건</span>
           </div>
@@ -89,7 +97,7 @@ export default async function AdminPage() {
         {/* ── 배정 완료 ───────────────────────────────────── */}
         <section className="rounded-2xl border-2 border-green-300 bg-green-50 p-5 flex flex-col gap-3 min-h-[200px]">
           <div className="flex items-center gap-2 mb-1">
-            <span className="w-3 h-3 rounded-full bg-green-500 inline-block" />
+            <CheckCircle2 className="w-6 h-6 text-green-600 shrink-0" />
             <h2 className="text-2xl font-bold">배정 완료</h2>
             <span className="ml-auto text-lg font-semibold text-green-700">{assigned.length}건</span>
           </div>

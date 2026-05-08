@@ -7,9 +7,9 @@ export const metadata = {
 export default function RegisterPage() {
   return (
     <div className="max-w-xl mx-auto">
-      <h1 className="text-4xl font-bold mb-2">시니어 프로필 등록</h1>
+      <h1 className="text-4xl font-bold mb-2">시니어 일자리 신청하기</h1>
       <p className="text-xl text-gray-500 mb-10">
-        아래 정보를 입력하시면 일자리를 자동으로 추천해 드립니다.
+        아래 정보를 입력하시면 담당자가 맞는 일자리를 찾아 드립니다.
       </p>
       <RegisterForm />
     </div>

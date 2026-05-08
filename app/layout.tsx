@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${geist.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-gray-50 text-gray-900">
+      <body className="min-h-full flex flex-col bg-gray-50 text-gray-900 text-lg">
         <SiteHeader />
         <main className="flex-1 max-w-5xl w-full mx-auto px-6 py-10">
           {children}

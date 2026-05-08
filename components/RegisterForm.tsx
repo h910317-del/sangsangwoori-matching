@@ -39,21 +39,25 @@ export default function RegisterForm() {
 
       <div className="flex flex-col gap-2">
         <label className="text-xl font-semibold" htmlFor="name">이름</label>
+        <p className="text-base text-gray-500">성함이 어떻게 되세요?</p>
         <input id="name" name="name" type="text" placeholder="홍길동" required className={inputClass} />
       </div>
 
       <div className="flex flex-col gap-2">
         <label className="text-xl font-semibold" htmlFor="region">지역</label>
+        <p className="text-base text-gray-500">어디에서 일하고 싶으세요?</p>
         <input id="region" name="region" type="text" placeholder="서울 강남구" required className={inputClass} />
       </div>
 
       <div className="flex flex-col gap-2">
         <label className="text-xl font-semibold" htmlFor="desired_job">희망 직종</label>
+        <p className="text-base text-gray-500">어떤 일을 하시겠어요?</p>
         <input id="desired_job" name="desired_job" type="text" placeholder="경비, 청소, 배달, 시설관리 등" required className={inputClass} />
       </div>
 
       <div className="flex flex-col gap-2">
         <label className="text-xl font-semibold" htmlFor="career_years">경력 (년)</label>
+        <p className="text-base text-gray-500">관련 일 경험이 몇 년이나 되세요?</p>
         <input
           id="career_years" name="career_years" type="number"
           placeholder="0" min={0} max={50} defaultValue={0}
