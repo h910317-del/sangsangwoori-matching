@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import type { MatchWithDetails } from "@/lib/supabase";
+import { calculateBreakdown } from "@/lib/matching";
 
 export const metadata = { title: "추천 일자리 — 상상우리" };
 
@@ -84,23 +85,43 @@ export default async function RecommendationsPage({
         </div>
       ) : (
         <div className="flex flex-col gap-4">
-          {matches.map((m, idx) => (
-            <div
-              key={m.id}
-              className="rounded-2xl border-2 border-gray-200 bg-white p-6 flex items-center justify-between gap-4"
-            >
-              <div className="flex items-center gap-4">
-                <span className="text-2xl font-bold text-gray-300 w-8 shrink-0">{idx + 1}</span>
-                <div>
-                  <p className="text-2xl font-bold text-gray-900">{m.jobs.title}</p>
-                  <p className="text-lg text-gray-500 mt-1">
-                    {m.jobs.region} · {m.jobs.job_type} · 경력 {m.jobs.required_career}년 이상
-                  </p>
+          {matches.map((m, idx) => {
+            const bd = calculateBreakdown(m.seniors, m.jobs);
+            return (
+              <div
+                key={m.id}
+                className="rounded-2xl border-2 border-gray-200 bg-white p-6 flex items-start justify-between gap-4"
+              >
+                <div className="flex items-start gap-4">
+                  <span className="text-2xl font-bold text-gray-300 w-8 shrink-0 pt-1">{idx + 1}</span>
+                  <div>
+                    <p className="text-2xl font-bold text-gray-900">{m.jobs.title}</p>
+                    <p className="text-lg text-gray-500 mt-1">
+                      {m.jobs.region} · {m.jobs.job_type} · 경력 {m.jobs.required_career}년 이상
+                    </p>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {[bd.region, bd.job, bd.career].map((item) => (
+                        <span
+                          key={item.label}
+                          className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm font-semibold ${
+                            item.score > 0
+                              ? "bg-blue-50 border-blue-200 text-blue-700"
+                              : "bg-gray-50 border-gray-200 text-gray-400"
+                          }`}
+                        >
+                          {item.label}
+                          <span className={item.score > 0 ? "text-blue-500" : "text-gray-300"}>
+                            +{item.score}
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
+                <ScoreBadge score={m.score} />
               </div>
-              <ScoreBadge score={m.score} />
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 

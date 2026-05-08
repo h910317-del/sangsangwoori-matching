@@ -33,6 +33,35 @@ function normalizeJob(j: string): string {
  *
  * 지역·직종은 정규화 후 비교 (원본 데이터 무변경)
  */
+export type ScoreBreakdown = {
+  region: { score: number; label: string };
+  job:    { score: number; label: string };
+  career: { score: number; label: string };
+};
+
+export function calculateBreakdown(senior: Senior, job: Job): ScoreBreakdown {
+  const sr = normalizeRegion(senior.region);
+  const jr = normalizeRegion(job.region);
+  const sj = normalizeJob(senior.desired_job);
+  const jt = normalizeJob(job.job_type);
+
+  let regionScore = 0, regionLabel = "지역 불일치";
+  if (sr === jr)                                    { regionScore = 40; regionLabel = "지역 일치"; }
+  else if (sr.includes(jr) || jr.includes(sr))     { regionScore = 20; regionLabel = "지역 근접"; }
+
+  let jobScore = 0, jobLabel = "직종 불일치";
+  if (sj === jt || sj.includes(jt) || jt.includes(sj)) { jobScore = 40; jobLabel = "직종 일치"; }
+
+  let careerScore = 0, careerLabel = "경력 부족";
+  if (senior.career_years >= job.required_career)  { careerScore = 20; careerLabel = "경력 충족"; }
+
+  return {
+    region: { score: regionScore, label: regionLabel },
+    job:    { score: jobScore,    label: jobLabel    },
+    career: { score: careerScore, label: careerLabel },
+  };
+}
+
 export function calculateScore(senior: Senior, job: Job): number {
   let score = 0;
 
